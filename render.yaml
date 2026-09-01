@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: intellimate-api
+    runtime: python
+    plan: starter          # free tier will almost certainly OOM — see chat notes on torch+speechbrain RAM use
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: GNANI_API_KEY
+        sync: false
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "false"
